@@ -3,8 +3,8 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 // En estadocivilController.php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/apple5a/config/database.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/apple5a/app/models/Estadocivil.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/config/database.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/app/models/Estadocivil.php';
 
 class estadocivilController {
     private $estadocivil;

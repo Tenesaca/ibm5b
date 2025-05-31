@@ -56,7 +56,7 @@ class BaseController {
     }
 
     public function __destruct() {
-        $this->db->close();
+        // PDO connections are closed automatically when the object is destroyed.
     }
 }
 ?>

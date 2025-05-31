@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/PersonaModel.php';
-require_once __DIR__ . '/../models/SexoModel.php';
-require_once __DIR__ . '/../models/EstadoCivilModel.php';
+require_once __DIR__ . '/../models/SexoModels.php';
+require_once __DIR__ . '/../models/EstadoCivil.php';
 
 class PersonaController {
     private $personaModel;

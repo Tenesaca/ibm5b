@@ -17,7 +17,7 @@ class DireccionController {
     public function __construct() {
         $this->db = (new Database())->getConnection();
         $this->direccion = new Direccion($this->db);
-        $this->persona = new Persona($this->db); // Inicializa el modelo Persona
+        $this->persona = new Direccion($this->db); // Inicializa el modelo Persona
     }
 
     // Mostrar todas las direcciones

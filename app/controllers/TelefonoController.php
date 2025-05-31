@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <?php
-// MEJORAS EN VISUAL CODE
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // En TelefonoController.php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/eysphp/config/database.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/eysphp/app/models/Telefono.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../models/TelefonoModel.php';
 
 class TelefonoController {
     private $telefono;
@@ -90,7 +89,6 @@ class TelefonoController {
                 $this->telefono->id = $_POST['id'];
                 if ($this->telefono->delete()) {
                     echo "Teléfono borrado exitosamente";
-                    die();
                     header('Location: index.php?msg=deleted');
                     exit;
                 } else {

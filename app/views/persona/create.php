@@ -1,82 +1,121 @@
-<?php
-require_once __DIR__ . '/../layouts/header.php';
-?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Persona</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
 
-<div class="container py-5">
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h2 class="h4"><i class="bi bi-person-plus"></i> Crear Nueva Persona</h2>
-        </div>
-        
-        <div class="card-body">
-            <?php if (isset($error)): ?>
-                <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-            <?php endif; ?>
-            
-            <form action="/sexo/ibm5b/public/persona/create" method="POST">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
-                    </div>
-                    
-                    <div class="col-md-6 mb-3">
-                        <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="apellido" required>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
-                    </div>
-                    
-                    <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email">
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="id_sexo" class="form-label">Sexo</label>
-                        <select class="form-select" id="id_sexo" name="id_sexo" required>
-                            <option value="">Seleccione...</option>
-                            <?php foreach ($sexos as $sexo): ?>
-                                <option value="<?= htmlspecialchars($sexo['id']) ?>">
-                                    <?= htmlspecialchars($sexo['nombre']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-6 mb-3">
-                        <label for="id_estado_civil" class="form-label">Estado Civil</label>
-                        <select class="form-select" id="id_estado_civil" name="id_estado_civil">
-                            <option value="">Seleccione...</option>
-                            <?php foreach ($estadosCiviles as $estado): ?>
-                                <option value="<?= htmlspecialchars($estado['id']) ?>">
-                                    <?= htmlspecialchars($estado['nombre']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="/sexo/ibm5b/public/persona" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Cancelar
-                    </a>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save"></i> Guardar Persona
-                    </button>
-                </div>
-            </form>
-        </div>
+        .form-container {
+            background-color: #ffffff;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Crear Nueva Persona</h2>
+        <form action="../../app/controllers/PersonaController.php?action=create" method="POST">
+            <div class="form-group">
+                <label for="nombres">Nombres:</label>
+                <input type="text" name="nombres" id="nombres" required>
+            </div>
+
+            <div class="form-group">
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" name="apellidos" id="apellidos" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fechanacimiento">Fecha de Nacimiento:</label>
+                <input type="date" name="fechanacimiento" id="fechanacimiento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="idsexo">Sexo:</label>
+                <select name="idsexo" id="idsexo" required>
+                    <?php
+                    if (isset($sexos) && !empty($sexos)):
+                        foreach ($sexos as $sexo):
+                            echo '<option value="' . $sexo['idsexo'] . '">' . htmlspecialchars($sexo['nombre']) . '</option>';
+                        endforeach;
+                    else:
+                        echo '<option value="">No hay sexos disponibles</option>';
+                    endif;
+                    ?>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="idestadocivil">Estado Civil:</label>
+                <select name="idestadocivil" id="idestadocivil" required>
+                    <?php
+                    if (isset($estadosciviles) && !empty($estadosciviles)):
+                        foreach ($estadosciviles as $estadocivil):
+                            echo '<option value="' . $estadocivil['idestadocivil'] . '">' . htmlspecialchars($estadocivil['nombre']) . '</option>';
+                        endforeach;
+                    else:
+                        echo '<option value="">No hay estados civiles disponibles</option>';
+                    endif;
+                    ?>
+                </select>
+            </div>
+
+            <input type="submit" value="Crear Persona">
+        </form>
     </div>
-</div>
 
-<?php
-require_once __DIR__ . '/../layouts/footer.php';
-?>
+</body>
+</html>
+

@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminar Teléfono</title>
+    <title>Elininar Sexo</title>
 </head>
 <body>
 
-<h1>Eliminar Teléfono</h1>
-<form action="/ibm5b/public/telefono/delete" method="POST">
-    <input type="hidden" name="id" value="<?php echo htmlspecialchars($telefono['id']); ?>">
-
-    <label for="numero">Número:</label>
-    <input type="text" name="numero" id="numero" value="<?php echo htmlspecialchars($telefono['numero']); ?>" required>
-
+<h1>Editar el Sexo</h1>
+<form action="/ibm5b/public/sexo/delete" method="POST">
+    <input type="hidden" name="idsexo" value="<?php echo htmlspecialchars($sexo['idsexo']); ?>">
+    
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($sexo['nombre']); ?>" required>
+    
     <input type="submit" value="Eliminar">
 </form>
 
-<a href="index.php">Volver al listado</a>
+<a href="index">Volver al listado</a>
 
 </body>
 </html>

@@ -2,9 +2,9 @@
 //base de datos configurada stalin francis
 class Database {
     private $host = "localhost";
-    private $db_name = "imb5b";
-    private $username = "root";
-    private $password = "";
+    private $db_name = "ibm5b";
+    private $username = "ibm5b";
+    private $password = "ibm5b";
     private $conn;
 
     public function getConnection() {

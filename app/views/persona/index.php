@@ -9,8 +9,8 @@
 <body>
 
 <div class="container">
-    <h1>Listar Personas</h1>
-    <a href="/ibm5b/app/views/persona/create.php"><button>Agregar</button></a>
+    <h1>Lista de Personas</h1>
+    <a href="/ibm5b/public/persona/create"><button>Agregar</button></a>
 
     <table>
         <thead>
@@ -32,8 +32,11 @@
                         <td><?php echo htmlspecialchars($persona['nombres']); ?></td>
                         <td><?php echo htmlspecialchars($persona['apellidos']); ?></td>
                         <td><?php echo htmlspecialchars($persona['fechanacimiento']); ?></td>
-                        <td><?php echo htmlspecialchars($persona['nombre_sexo']); ?></td> <td><?php echo htmlspecialchars($persona['nombre_estadocivil']); ?></td> <td>
-                            <a href="/ibm5b/public/persona/editForm?id=<?php echo htmlspecialchars($persona['idpersona']); ?>">
+                        <td><?php echo htmlspecialchars($persona['elsexo']); ?></td> <td><?php echo htmlspecialchars($persona['elestadocivil']); ?></td> <td>
+                            <a href="/ibm5b/public/persona/view?idpersona=<?php echo htmlspecialchars($persona['idpersona']); ?>">
+                                <button>View</button>
+                            </a>
+                            <a href="/ibm5b/public/persona/edit?idpersona=<?php echo htmlspecialchars($persona['idpersona']); ?>">
                                 <button>Editar</button>
                             </a>
                             <a href="/ibm5b/public/persona/deleteForm?id=<?php echo htmlspecialchars($persona['idpersona']); ?>"

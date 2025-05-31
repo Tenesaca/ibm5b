@@ -8,8 +8,8 @@
 <body>
 
 <h1>Editar </h1>
-<form action="/sexo/public/sexo/update" method="POST">
-    <input type="hidden" name="id" value="<?php echo htmlspecialchars($sexo['id']); ?>">
+<form action="/ibm5b/public/sexo/update" method="POST">
+    <input type="hidden" name="idsexo" value="<?php echo htmlspecialchars($sexo['idsexo']); ?>">
     
     <label for="nombre">Nombre:</label>
     <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($sexo['nombre']); ?>" required>
@@ -17,7 +17,7 @@
     <input type="submit" value="Actualizar">
 </form>
 
-<a href="index.php">Volver al listado</a>
+<a href="index">Volver al listado</a>
 
 </body>
 </html>

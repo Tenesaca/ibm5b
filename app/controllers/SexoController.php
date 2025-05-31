@@ -1,88 +1,193 @@
+
+<!DOCTYPE html>
 <?php
-require_once '../config/database.php';
-require_once '../models/SexoModel.php';
+// MEJORAS EN VISUAL CODE
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+// En SexoController.php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/config/database.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/app/models/Sexo.php';
+
+
 
 class SexoController {
-    private $model;
+    private $sexo;
+    private $db;
 
     public function __construct() {
-        $database = new Database();
-        $db = $database->getConnection();
-        $this->model = new SexoModel($db);
+        $this->db = (new Database())->getConnection();
+        $this->sexo = new Sexo($this->db);
     }
 
-   public function index() {
-    $sexos = $this->model->getAll();
-    require_once __DIR__ . '/../views/sexo/index.php';
+    // Mostrar todos los sexos
+    public function index() {
+        $sexos = $this->sexo->read();
+        require_once '../app/views/sexo/index.php';
+    }
+
+
+
+public function create() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        echo "Formulario recibido";  // Verificar si llega el formulario
+        if (isset($_POST['nombre'])) {
+            $this->sexo->nombre = $_POST['nombre'];
+            if ($this->sexo->create()) {
+                echo "Sexo creado exitosamente";
+                // Redirigir o mostrar un mensaje de éxito
+            } else {
+                echo "Error al crear el sexo";
+            }
+        } else {
+            echo "Faltan datos";
+        }
+    } else {
+        echo "Método incorrecto";  // Verificar que el formulario no se envíe con GET
+    }
+    die();  // Detener la ejecución para ver los mensajes
 }
 
-    public function create() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nombre = $_POST['nombre'] ?? '';
-            
-            if ($this->model->create($nombre)) {
-                header('Location: /eysphp/public/sexo?success=created');
-            } else {
-                header('Location: /eysphp/public/sexo/create?error=duplicate');
-            }
-            exit;
-        }
-        require_once '../views/sexo/create.php';
-    }
 
-    public function edit() {
-        if (!isset($_GET['id'])) {
-            header('Location: /eysphp/public/sexo');
-            exit;
-        }
+public function edit($idsexo) {
 
-        $id = $_GET['id'];
-        
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nombre = $_POST['nombre'] ?? '';
-            
-            if ($this->model->update($id, $nombre)) {
-                header('Location: /eysphp/public/sexo?success=updated');
-            } else {
-                header("Location: /eysphp/public/sexo/edit?id=$id&error=duplicate");
-            }
-            exit;
-        }
+// Pasar el ID al modelo antes de llamar a readOne()
+        $this->sexo->idsexo = $idsexo;
+        $sexo = $this->sexo->readOne();
 
-        $sexo = $this->model->getById($id);
         if (!$sexo) {
-            header('Location: /eysphp/public/sexo');
+            die("Error: No se encontró el registro.");
+        }
+
+    require_once '../app/views/sexo/edit.php';
+}
+
+
+
+public function eliminar($idsexo) {
+
+// Pasar el ID al modelo antes de llamar a readOne()
+        $this->sexo->idsexo = $idsexo;
+        $sexo = $this->sexo->readOne();
+
+        if (!$sexo) {
+            die("Error: No se encontró el registro.");
+        }
+
+    require_once '../app/views/sexo/delete.php';
+}
+
+
+
+
+
+
+
+public function update() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        echo "Formulario recibido";  // Verificar si llega el formulario
+        if (isset($_POST['nombre'])) {
+            $this->sexo->nombre = $_POST['nombre'];
+            $this->sexo->idsexo = $_POST['idsexo'];
+            if ($this->sexo->update()) {
+                echo "Sexo actualizado exitosamente";
+                // Redirigir o mostrar un mensaje de éxito
+            } else {
+                echo "Error al crear el sexo";
+            }
+        } else {
+            echo "Faltan datos";
+        }
+    } else {
+        echo "Método incorrecto";  // Verificar que el formulario no se envíe con GET
+    }
+    die();  // Detener la ejecución para ver los mensajes
+}
+
+
+
+
+
+
+
+
+    // Eliminar un sexo
+    public function delete() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['idsexo'])) {
+            $this->sexo->idsexo = $_POST['idsexo'];
+        if ($this->sexo->delete()) {
+                echo "Sexo borrado exitosamente";
+            header('Location: index.php?msg=deleted');
+            exit;
+        } else {
+            header('Location: index.php?msg=error');
             exit;
         }
-
-        require_once '../views/sexo/edit.php';
-    }
-
-    public function delete() {
-        if (isset($_GET['id'])) {
-            $this->model->delete($_GET['id']);
+} else {
+            echo "Faltan datos";
         }
-        header('Location: /eysphp/public/sexo');
+    } else {
+        echo "Método incorrecto";  // Verificar que el formulario no se envíe con GET
+    }
+    die();  // Detener la ejecución para ver los mensajes
+
+}
+
+
+public function api() {
+
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        $sexos = $this->sexo->getAll();
+        header('Content-Type: application/json');
+        echo json_encode($sexos);
         exit;
     }
+
+
+
+
+
+
+
 }
 
-// Routing
-$action = $_GET['action'] ?? 'index';
-$controller = new SexoController();
+/// Manejo de la acción en la URL
+if (isset($_GET['action'])) {
+    $controller = new SexoController();
 
-switch ($action) {
-    case 'create':
-        $controller->create();
-        break;
-    case 'edit':
-        $controller->edit();
-        break;
-    case 'delete':
-        $controller->delete();
-        break;
-    default:
-        $controller->index();
-        break;
+    switch ($_GET['action']) {
+        case 'create':
+            $controller->create();
+            break;
+         case 'update':
+
+            $controller->update();
+            break;
+         case 'delete':
+
+            $controller->delete();
+            break;
+
+         case 'api':
+
+            $controller->api();
+            break;
+
+
+
+
+
+        default:
+            echo "Acción no válida.";
+            break;
+    }
+} else {
+//    echo "No se especificó ninguna acción.";
 }
+
+
+
 ?>

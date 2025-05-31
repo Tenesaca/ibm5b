@@ -1,4 +1,5 @@
 <?php
+// Codigo Mejorado
 // MEJORAS EN VISUAL CODE
 ini_set('display_errors', 1);
 error_reporting(E_ALL);

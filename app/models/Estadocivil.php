@@ -1,4 +1,5 @@
 <?php
+// Codigo Mejorado
 // Modelo EstadoCivil
 class EstadoCivil {
     private $conn;

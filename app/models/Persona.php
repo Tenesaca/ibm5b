@@ -1,4 +1,5 @@
 <?php
+// Codigo mejorado
 // Modelo Persona
 class Persona {
     private $conn;

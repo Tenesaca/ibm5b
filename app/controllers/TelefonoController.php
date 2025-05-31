@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 // En TelefonoController.php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/config/database.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/app/models/Telefono.php';
-
 require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/app/models/Persona.php';
 class TelefonoController {
     private $telefono;

@@ -1,5 +1,5 @@
 <?php
-//Codigo Mejorado
+//Codigo Mejorado.
 // Modelo Direccion
 class Direccion {
     private $conn;

@@ -3,7 +3,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-//Codigo Mejorado
+//Codigo Mejorado.
 // En DireccionController.php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/config/database.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/ibm5b/app/models/Direccion.php';
